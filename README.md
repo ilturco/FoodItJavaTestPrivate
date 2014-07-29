@@ -24,19 +24,19 @@ To simplify environment setup and allow you to jump straight into solving the te
 ## Get started.
 1. Clone this repository https://github.com/FOODit/FOODit-JavaTest.git
 
-2. Run mvn:install to install the application
+2. Run mvn install to install the application
 
-3. Run mvn:appengine:devserver to start the application locally.
+3. Run mvn appengine:devserver to start the application locally.
 
 4. Start writing the code to expose the data required in the test.
 
 5. When your happy with your solution you will need to deploy it to your own appengine instance and
 test that it works. Please also push the solution to your own public github repository so we can review the code
 
-When your ready please send us the urls of the created api's and the link to the projects github repository.
+When you are ready please send us the urls of the created api's and the link to the projects github repository.
 
 ## Tips
 To expose the api's you can simple return a JsonView from your controller method read about views here
-http://3wks.github.io/thundr/thundr/views.html
+http://3wks.github.io/thundr/1.1/thundr/views.html
 
 Happy coding :)

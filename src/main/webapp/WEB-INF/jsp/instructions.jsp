@@ -31,17 +31,79 @@
         <li><a href=/restaurant/jashanexquisiteindianfood/download>jashanexquisiteindianfood</a></li>
         <li><a href="/restaurant/newchinaexpress/download">newchinaexpress</a></li>
     </ul>
-     The data includes the menu and existing orders that have been previously placed for the restaurant <code>RestaurantLoadData.java</code>
+     The data includes the menu and existing orders that have been previously placed for the restaurant <code>RestaurantData.java</code>
  </p>
     <h3>Menu/Orders</h3>
      <p>
-         A menu contains meals which which have ids that link to the id of a line items on a order.
+         A menu contains meals which have IDs that link to the ID of a line items on a order.
          </br>
 
-         For example the following meal on the bbqgrill menu has a id 5:
+         For example the following meal on the bbqgrill menu has a ID 5:
      </p>
     <div class="highlight">
-        <pre>{"id":5,"name":"Mixed Kebab","description":"","category":"Kebabs","sizeAndPrice":{"Regular":"7.50"},"mealTypeOptions":[{"name":"Side","multiSelect":true,"dropDown":false,"options":[{"label":"Chips","pricesForSize":{"Regular":"1.50"}},{"label":"Roast Potatoes","pricesForSize":{"Regular":"1.50"}},{"label":"Rice","pricesForSize":{"Regular":"1.50"}},{"label":"Taramasalata","pricesForSize":{"Regular":"1.50"}},{"label":"Houmous","pricesForSize":{"Regular":"1.50"}},{"label":"Tzatziki","pricesForSize":{"Regular":"1.50"}},{"label":"Greek Salad","pricesForSize":{"Regular":"3.00"}}]}],"startingFromPrice":"7.50"}</pre>
+        <pre>
+{
+  "id": 5,
+  "name": "Mixed Kebab",
+  "description": "",
+  "category": "Kebabs",
+  "sizeAndPrice": {
+    "Regular": "7.50"
+  },
+  "mealTypeOptions": [
+    {
+      "name": "Side",
+      "multiSelect": true,
+      "dropDown": false,
+      "options": [
+        {
+          "label": "Chips",
+          "pricesForSize": {
+            "Regular": "1.50"
+          }
+        },
+        {
+          "label": "Roast Potatoes",
+          "pricesForSize": {
+            "Regular": "1.50"
+          }
+        },
+        {
+          "label": "Rice",
+          "pricesForSize": {
+            "Regular": "1.50"
+          }
+        },
+        {
+          "label": "Taramasalata",
+          "pricesForSize": {
+            "Regular": "1.50"
+          }
+        },
+        {
+          "label": "Houmous",
+          "pricesForSize": {
+            "Regular": "1.50"
+          }
+        },
+        {
+          "label": "Tzatziki",
+          "pricesForSize": {
+            "Regular": "1.50"
+          }
+        },
+        {
+          "label": "Greek Salad",
+          "pricesForSize": {
+            "Regular": "3.00"
+          }
+        }
+      ]
+    }
+  ],
+  "startingFromPrice": "7.50"
+}
+        </pre>
     </div>
 
     <p>And the order below has a line item of 5 hence we can deduce that this foodie has ordered a Mixed Kebab on this order</p>
