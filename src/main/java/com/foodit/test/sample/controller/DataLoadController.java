@@ -1,7 +1,9 @@
 package com.foodit.test.sample.controller;
 
+import com.foodit.test.sample.controller.dto.Order;
 import com.google.appengine.labs.repackaged.com.google.common.collect.Lists;
 import com.google.common.io.Resources;
+import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.threewks.thundr.http.ContentType;
 import com.threewks.thundr.http.HttpSupport;
@@ -32,6 +34,16 @@ public class DataLoadController {
 			restaurantData.add(loadData(restaurant));
 		}
 		ofy().save().entities(restaurantData);
+
+        //I prefer to separate the logic and start a new cycle...eventually this is just an excercise.
+        for (String restaurant : restaurants) {
+            Order[] orders =  loadDataTest(restaurant);
+            //TODO can I avoid this cycle and save the whole array?
+            for (int i = 0; i < orders.length; i++) {
+                Order order = orders[i];
+                ofy().save().entities(order);
+            }
+        }
 		return new StringView("Data loaded.");
 	}
 
@@ -42,7 +54,18 @@ public class DataLoadController {
 		return restaurantLoadData;
 	}
 
-	private String readFile(String resourceName) {
+    private Order[] loadDataTest(String restaurantName) {
+        //TODO the file has already been read. Refactor!
+        String ordersJson = readFile(String.format("orders-%s.json", restaurantName));
+        //TODO probably not the best place where declare and initialize the Gson serializer.
+        Gson gson = new Gson();
+        Order[] orders = gson.fromJson(ordersJson, Order[].class);
+        return orders;
+    }
+
+
+
+    private String readFile(String resourceName) {
 		URL url = Resources.getResource(resourceName);
 		try {
 			return IOUtils.toString(new InputStreamReader(url.openStream()));
