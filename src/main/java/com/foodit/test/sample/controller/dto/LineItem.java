@@ -21,6 +21,14 @@ public class LineItem {
         return quantity;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public LineItem() {
     }
 
