@@ -1,7 +1,7 @@
 package com.foodit.test.sample.controller;
 
-import com.foodit.test.sample.controller.dto.LineItem;
-import com.foodit.test.sample.controller.dto.Order;
+import com.foodit.test.solution.dto.LineItem;
+import com.foodit.test.solution.dto.Order;
 import com.threewks.thundr.gae.objectify.repository.AsyncResult;
 import com.threewks.thundr.gae.objectify.repository.BaseRepository;
 import com.threewks.thundr.search.google.GoogleSearchService;

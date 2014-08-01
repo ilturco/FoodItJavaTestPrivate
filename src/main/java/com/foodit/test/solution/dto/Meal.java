@@ -1,4 +1,4 @@
-package com.foodit.test.sample.controller.dto;
+package com.foodit.test.solution.dto;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;

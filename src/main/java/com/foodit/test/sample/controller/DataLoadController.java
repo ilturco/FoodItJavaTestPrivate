@@ -1,6 +1,6 @@
 package com.foodit.test.sample.controller;
 
-import com.foodit.test.sample.controller.dto.Order;
+import com.foodit.test.solution.dto.Order;
 import com.google.appengine.labs.repackaged.com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
@@ -35,7 +35,8 @@ public class DataLoadController {
 		}
 		ofy().save().entities(restaurantData);
 
-        //I prefer to separate the logic and start a new cycle...eventually this is just an excercise.
+        // TODO put this logic elsewhere...in a controller in the package com.foodit.test.solution.controller
+        // Or, better, in a specific service to implement a separation of concerns
         for (String restaurant : restaurants) {
             Order[] orders =  loadDataTest(restaurant);
             //TODO can I avoid this cycle and save the whole array?

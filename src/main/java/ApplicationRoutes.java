@@ -1,5 +1,5 @@
 import com.foodit.test.sample.controller.DataLoadController;
-import com.foodit.test.sample.controller.DataSearchController;
+import com.foodit.test.solution.controller.DataSearchController;
 import com.threewks.thundr.action.method.MethodAction;
 import com.threewks.thundr.route.Route;
 import com.threewks.thundr.route.Routes;
@@ -39,7 +39,7 @@ public class ApplicationRoutes {
 
         // Route for API #1 - Total number of orders for each restaurant
         routes.addRoute(new Route(GET, "/totalNumberOfOrders", Names.TotalOrders), new MethodAction(DataSearchController.class, "getTotalNumberOfOrders"));
-        routes.addRoute(new Route(GET, "/totalAmountOfMoney", Names.TotalAmountOfMoney), new MethodAction(DataSearchController.class, "totalAmountOfMoney"));
+        routes.addRoute(new Route(GET, "/totalAmountOfMoney", Names.TotalAmountOfMoney), new MethodAction(DataSearchController.class, "getTotalAmountOfMoney"));
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedMeal", Names.MostFrequentlyOrderedMeal), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedMeal"));
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategory", Names.MostFrequentlyOrderedCategory), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));
 
