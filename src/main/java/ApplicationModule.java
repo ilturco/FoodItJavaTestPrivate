@@ -34,7 +34,6 @@ public class ApplicationModule extends BaseModule {
 	private void configureObjectify() {
 		ObjectifyService.register(RestaurantData.class);
         ObjectifyService.register(Order.class);
-        //ObjectifyService.register(LineItem.class);
 
     }
 }
