@@ -58,4 +58,31 @@ public class Restaurant {
     public void setTotalAmountOfSales(float totalAmountOfSales) {
         this.totalAmountOfSales = totalAmountOfSales;
     }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", storeId='" + storeId + '\'' +
+                ", totalNumberOfOrders=" + totalNumberOfOrders +
+                ", totalAmountOfSales=" + totalAmountOfSales +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Restaurant that = (Restaurant) o;
+
+        if (!storeId.equals(that.storeId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return storeId.hashCode();
+    }
 }

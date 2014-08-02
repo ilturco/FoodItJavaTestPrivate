@@ -5,7 +5,7 @@ import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
 import com.foodit.test.solution.service.OrderServiceInterface;
 import com.threewks.thundr.view.json.JsonView;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by salvatore on 01/08/2014.
@@ -29,7 +29,7 @@ public class DataSearchController {
 
     public JsonView getTotalNumberOfOrdersForEachRestaurant(){
 
-        List<NumberOfOrdersForARestaurant> restaurants =  orderService.getNumberOfOrdersForEachRestaurant();
+        Set<NumberOfOrdersForARestaurant> restaurants =  orderService.getNumberOfOrdersForEachRestaurant();
         JsonView result = new JsonView(restaurants);
 
         return result;
@@ -47,7 +47,7 @@ public class DataSearchController {
 
     public JsonView getTotalAmountOfMoneyForEachRestaurant(){
 
-        List<AmountOfMoneyForARestaurant> restaurants =  orderService.getTotalAmountOfMoneyForEachRestaurant();
+        Set<AmountOfMoneyForARestaurant> restaurants =  orderService.getTotalAmountOfMoneyForEachRestaurant();
         JsonView result = new JsonView(restaurants);
 
         return result;

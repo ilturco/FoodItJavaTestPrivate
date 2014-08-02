@@ -19,4 +19,24 @@ public class NumberOfOrdersForARestaurant {
     public int getNumberOfOrders() {
         return numberOfOrders;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NumberOfOrdersForARestaurant that = (NumberOfOrdersForARestaurant) o;
+
+        if (numberOfOrders != that.numberOfOrders) return false;
+        if (!restaurant.equals(that.restaurant)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = restaurant.hashCode();
+        result = 31 * result + numberOfOrders;
+        return result;
+    }
 }

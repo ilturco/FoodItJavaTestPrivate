@@ -10,7 +10,9 @@ import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
 import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -29,22 +31,25 @@ public class OrderServiceImp implements  OrderServiceInterface {
     }
 
     @Override
-    public List<NumberOfOrdersForARestaurant> getNumberOfOrdersForEachRestaurant() {
+    public Set<NumberOfOrdersForARestaurant> getNumberOfOrdersForEachRestaurant() {
 
         List<Restaurant> restaurants = ofy().load().type(Restaurant.class).list();
+        System.out.println("\n\n\n\n\nsize of the restaurant list = " + restaurants.size());
         // Projection queries are not supported by objectify yet (http://stackoverflow.com/questions/23154817/distinct-using-objectify)
         // Therefore we need to manually adapt the dto to a front-end bean that has only the fields needed, which
         // actually is always a best practice.
-        List<NumberOfOrdersForARestaurant> results = new ArrayList<>();
+        Set<NumberOfOrdersForARestaurant> results = new HashSet<>();
         for (int i = 0; i < restaurants.size(); i++) {
             Restaurant restaurant = restaurants.get(i);
             NumberOfOrdersForARestaurant restaurantProjected =
                     new NumberOfOrdersForARestaurant(restaurant.getStoreId(), restaurant.getTotalNumberOfOrders());
             results.add(restaurantProjected);
         }
+        System.out.println("\n\n\n\n\nsize of the result list = " + results.size());
 
         return results;
     }
+
     @Deprecated
     @Override
     public float getTotalAmountOfMoney(String restaurant) {
@@ -61,12 +66,12 @@ public class OrderServiceImp implements  OrderServiceInterface {
     }
 
     @Override
-    public List<AmountOfMoneyForARestaurant> getTotalAmountOfMoneyForEachRestaurant() {
+    public Set<AmountOfMoneyForARestaurant> getTotalAmountOfMoneyForEachRestaurant() {
         List<Restaurant> restaurants = ofy().load().type(Restaurant.class).list();
         // Projection queries are not supported by objectify yet (http://stackoverflow.com/questions/23154817/distinct-using-objectify)
         // Therefore we need to manually adapt the dto to a front-end bean that has only the fields needed, which
         // actually is always a best practice.
-        List<AmountOfMoneyForARestaurant> results = new ArrayList<>();
+        Set<AmountOfMoneyForARestaurant> results = new HashSet<>();
         for (int i = 0; i < restaurants.size(); i++) {
             Restaurant restaurant = restaurants.get(i);
             AmountOfMoneyForARestaurant restaurantProjected =

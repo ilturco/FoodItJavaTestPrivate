@@ -38,8 +38,10 @@ public class DataLoadController {
 
         // TODO put this logic elsewhere...in a controller in the package com.foodit.test.solution.controller
         // Or, better, in a specific service to implement a separation of concerns
+        System.out.println("\n\n\nhow many restaurants = " + restaurants.size());
 
         for (String restaurant : restaurants) {
+            System.out.println("work for: " + restaurant);
             Order[] orders =  loadDataTest(restaurant);
             Restaurant restaurantObject = new Restaurant(restaurant);
 
@@ -56,7 +58,8 @@ public class DataLoadController {
                 restaurantObject.setTotalNumberOfOrders(++oldTotalNumberOfOrders);
 
             }
-            ofy().save().entities(restaurantObject);
+            System.out.println("\n\n\nabout to add the entity = " + restaurantObject);
+            ofy().save().entity(restaurantObject);
         }
 		return new StringView("Data loaded.");
 	}
