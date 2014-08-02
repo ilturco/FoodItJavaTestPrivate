@@ -1,6 +1,7 @@
 package com.foodit.test.solution.controller;
 
 import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
+import com.foodit.test.solution.bean.frontend.MealFrontEnd;
 import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
 import com.foodit.test.solution.service.OrderServiceInterface;
 import com.threewks.thundr.view.json.JsonView;
@@ -56,7 +57,8 @@ public class DataSearchController {
 
     public JsonView getMostFrequentlyOrderedMeal(){
 
-        JsonView result = new JsonView("not yet implemented");
+        Set<MealFrontEnd> mealFrontEnds =  orderService.getMostFrequentlyOrderedMeals();
+        JsonView result = new JsonView(mealFrontEnds);
 
         return result;
 

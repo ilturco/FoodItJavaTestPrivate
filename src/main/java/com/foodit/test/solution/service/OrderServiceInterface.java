@@ -1,6 +1,7 @@
 package com.foodit.test.solution.service;
 
 import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
+import com.foodit.test.solution.bean.frontend.MealFrontEnd;
 import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
 
 import java.util.Set;
@@ -17,6 +18,8 @@ public interface OrderServiceInterface {
     public float getTotalAmountOfMoney(String restaurant);
 
     public Set<AmountOfMoneyForARestaurant> getTotalAmountOfMoneyForEachRestaurant();
+
+    public Set<MealFrontEnd> getMostFrequentlyOrderedMeals();
 
 
 }
