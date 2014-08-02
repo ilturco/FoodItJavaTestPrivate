@@ -24,6 +24,7 @@ public class ApplicationRoutes {
         public static final String TotalOrders = "total-orders";
         public static final String TotalOrdersEachRestaurant = "total-orders-for-each-restaurant";
         public static final String TotalAmountOfMoney = "total-amount-of-money";
+        public static final String TotalAmountOfMoneyEachRestaurant = "total-amount-of-money-for-each-restaurant";
         public static final String MostFrequentlyOrderedMeal = "most-frequently-ordered-meal";
         public static final String MostFrequentlyOrderedCategory = "most-frequently-ordered-category";
 
@@ -41,7 +42,12 @@ public class ApplicationRoutes {
         // Route for API #1 - Total number of orders for each restaurant
         routes.addRoute(new Route(GET, "/totalNumberOfOrders/{restaurant}", Names.TotalOrders), new MethodAction(DataSearchController.class, "getTotalNumberOfOrders"));
         routes.addRoute(new Route(GET, "/totalNumberOfOrdersForEachRestaurant", Names.TotalOrdersEachRestaurant), new MethodAction(DataSearchController.class, "getTotalNumberOfOrdersForEachRestaurant"));
-        routes.addRoute(new Route(GET, "/totalAmountOfMoney", Names.TotalAmountOfMoney), new MethodAction(DataSearchController.class, "getTotalAmountOfMoney"));
+
+        // Route for API #2 - Total amount of money (sales) for each restaurant
+        routes.addRoute(new Route(GET, "/totalAmountOfMoney/{restaurant}", Names.TotalAmountOfMoney), new MethodAction(DataSearchController.class, "getTotalAmountOfMoney"));
+        routes.addRoute(new Route(GET, "/totalAmountOfMoneyForEachRestaurant", Names.TotalAmountOfMoneyEachRestaurant), new MethodAction(DataSearchController.class, "getTotalAmountOfMoneyForEachRestaurant"));
+
+
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedMeal", Names.MostFrequentlyOrderedMeal), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedMeal"));
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategory", Names.MostFrequentlyOrderedCategory), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));
 

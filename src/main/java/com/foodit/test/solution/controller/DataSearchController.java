@@ -1,6 +1,7 @@
 package com.foodit.test.solution.controller;
 
-import com.foodit.test.solution.dto.Restaurant;
+import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
+import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
 import com.foodit.test.solution.service.OrderServiceInterface;
 import com.threewks.thundr.view.json.JsonView;
 
@@ -28,16 +29,26 @@ public class DataSearchController {
 
     public JsonView getTotalNumberOfOrdersForEachRestaurant(){
 
-        List<Restaurant> restaurants =  orderService.getNumberOfOrdersForEachRestaurant();
+        List<NumberOfOrdersForARestaurant> restaurants =  orderService.getNumberOfOrdersForEachRestaurant();
         JsonView result = new JsonView(restaurants);
 
         return result;
 
     }
 
-    public JsonView getTotalAmountOfMoney(){
+    public JsonView getTotalAmountOfMoney(String restaurant){
 
-        JsonView result = new JsonView("not yet implemented");
+        float number =  orderService.getTotalAmountOfMoney(restaurant);
+        JsonView result = new JsonView(number);
+
+        return result;
+
+    }
+
+    public JsonView getTotalAmountOfMoneyForEachRestaurant(){
+
+        List<AmountOfMoneyForARestaurant> restaurants =  orderService.getTotalAmountOfMoneyForEachRestaurant();
+        JsonView result = new JsonView(restaurants);
 
         return result;
 

@@ -1,6 +1,6 @@
 import com.foodit.test.sample.controller.RestaurantData;
-import com.foodit.test.solution.dto.Order;
-import com.foodit.test.solution.dto.Restaurant;
+import com.foodit.test.solution.bean.dto.Order;
+import com.foodit.test.solution.bean.dto.Restaurant;
 import com.foodit.test.solution.service.OrderServiceImp;
 import com.foodit.test.solution.service.OrderServiceInterface;
 import com.googlecode.objectify.ObjectifyService;

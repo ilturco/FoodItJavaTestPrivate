@@ -1,8 +1,9 @@
-package com.foodit.test.solution.dto;
+package com.foodit.test.solution.bean.dto;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 import com.threewks.thundr.gae.objectify.repository.RepositoryEntity;
 
 import java.util.HashSet;
@@ -15,21 +16,17 @@ import java.util.Set;
 public class Order implements RepositoryEntity {
     @Id
     private Long orderId;
+    //actually it is indexed by default. I should investigate better whether this is a B-tree or a bitmap index.
+    //in the former case the index would not help much because this is a field with a low number of distinct values.
     @Index
     private String storeId;
+    //since we currently do not filter on this field.
+    @Unindex
     private float totalValue;
-    //with this specific version of gson there are issues with inner classes. With 2.2.4 they work just fine.
-    //TODO if there is enough time let's see whether it is possible to use an inner class...cleaner!
+    //with this specific version of gson there are issues with inner classes. With version 2.2.4 they work just fine.
     private Set<LineItem> lineItems = new HashSet<>();
 
     public Order() {
-    }
-
-    public Order(Long orderId, String storeId, float totalValue, Set<LineItem> lineItems) {
-        this.orderId = orderId;
-        this.storeId = storeId;
-        this.totalValue = totalValue;
-        this.lineItems = lineItems;
     }
 
     public Order(String storeId) {
@@ -61,7 +58,6 @@ public class Order implements RepositoryEntity {
         return orderId;
     }
 
-
     public String getStoreId() {
         return storeId;
     }
@@ -74,16 +70,8 @@ public class Order implements RepositoryEntity {
         return lineItems;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", storeId='" + storeId + '\'' +
-                ", totalValue=" + totalValue +
-                ", lineItems=" + lineItems +
-                '}';
-    }
 
+    /*
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -108,5 +96,6 @@ public class Order implements RepositoryEntity {
             return false;
         return true;
     }
+    */
 
 }

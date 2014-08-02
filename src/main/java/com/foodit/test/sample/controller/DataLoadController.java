@@ -1,7 +1,7 @@
 package com.foodit.test.sample.controller;
 
-import com.foodit.test.solution.dto.Order;
-import com.foodit.test.solution.dto.Restaurant;
+import com.foodit.test.solution.bean.dto.Order;
+import com.foodit.test.solution.bean.dto.Restaurant;
 import com.google.appengine.labs.repackaged.com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;

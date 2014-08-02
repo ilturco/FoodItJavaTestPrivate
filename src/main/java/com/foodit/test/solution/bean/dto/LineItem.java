@@ -1,4 +1,4 @@
-package com.foodit.test.solution.dto;
+package com.foodit.test.solution.bean.dto;
 
 import com.googlecode.objectify.annotation.Embed;
 
