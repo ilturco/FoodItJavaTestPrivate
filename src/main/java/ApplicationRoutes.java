@@ -22,6 +22,7 @@ public class ApplicationRoutes {
 		public static final String ViewInstructions = "view-instructions";
 		public static final String ViewData = "view-data";
         public static final String TotalOrders = "total-orders";
+        public static final String TotalOrdersEachRestaurant = "total-orders-for-each-restaurant";
         public static final String TotalAmountOfMoney = "total-amount-of-money";
         public static final String MostFrequentlyOrderedMeal = "most-frequently-ordered-meal";
         public static final String MostFrequentlyOrderedCategory = "most-frequently-ordered-category";
@@ -38,7 +39,8 @@ public class ApplicationRoutes {
 		routes.addRoute(new Route(GET, "/restaurant/{restaurant}/download", Names.ViewData), new MethodAction(DataLoadController.class, "viewData"));
 
         // Route for API #1 - Total number of orders for each restaurant
-        routes.addRoute(new Route(GET, "/totalNumberOfOrders", Names.TotalOrders), new MethodAction(DataSearchController.class, "getTotalNumberOfOrders"));
+        routes.addRoute(new Route(GET, "/totalNumberOfOrders/{restaurant}", Names.TotalOrders), new MethodAction(DataSearchController.class, "getTotalNumberOfOrders"));
+        routes.addRoute(new Route(GET, "/totalNumberOfOrdersForEachRestaurant", Names.TotalOrdersEachRestaurant), new MethodAction(DataSearchController.class, "getTotalNumberOfOrdersForEachRestaurant"));
         routes.addRoute(new Route(GET, "/totalAmountOfMoney", Names.TotalAmountOfMoney), new MethodAction(DataSearchController.class, "getTotalAmountOfMoney"));
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedMeal", Names.MostFrequentlyOrderedMeal), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedMeal"));
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategory", Names.MostFrequentlyOrderedCategory), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));

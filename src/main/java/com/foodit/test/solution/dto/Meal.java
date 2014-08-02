@@ -1,5 +1,6 @@
 package com.foodit.test.solution.dto;
 
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
@@ -7,6 +8,7 @@ import com.googlecode.objectify.annotation.Id;
  * Created by salvatore on 31/07/2014.
  */
 @Entity
+@Cache
 public class Meal {
     @Id
     private Long id;
@@ -15,6 +17,7 @@ public class Meal {
     private String category;
     private String restaurant;
     private Long startingFromPrice;
+    private float numberOfOrders;
 
     public Long getId() {
         return id;
@@ -62,5 +65,13 @@ public class Meal {
 
     public void setStartingFromPrice(Long startingFromPrice) {
         this.startingFromPrice = startingFromPrice;
+    }
+
+    public float getNumberOfOrders() {
+        return numberOfOrders;
+    }
+
+    public void setNumberOfOrders(float numberOfOrders) {
+        this.numberOfOrders = numberOfOrders;
     }
 }

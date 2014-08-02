@@ -1,7 +1,10 @@
 package com.foodit.test.solution.controller;
 
+import com.foodit.test.solution.dto.Restaurant;
 import com.foodit.test.solution.service.OrderServiceInterface;
 import com.threewks.thundr.view.json.JsonView;
+
+import java.util.List;
 
 /**
  * Created by salvatore on 01/08/2014.
@@ -14,10 +17,19 @@ public class DataSearchController {
         this.orderService = orderService;
     }
 
-    public JsonView getTotalNumberOfOrders(){
+    public JsonView getTotalNumberOfOrders(String restaurant){
 
-        int number =  orderService.getNumberOfOrder("bbqgrill");
+        int number =  orderService.getNumberOfOrders(restaurant);
         JsonView result = new JsonView(number);
+
+        return result;
+
+    }
+
+    public JsonView getTotalNumberOfOrdersForEachRestaurant(){
+
+        List<Restaurant> restaurants =  orderService.getNumberOfOrdersForEachRestaurant();
+        JsonView result = new JsonView(restaurants);
 
         return result;
 

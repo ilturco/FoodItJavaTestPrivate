@@ -1,6 +1,7 @@
 package com.foodit.test.sample.controller;
 
 import com.foodit.test.solution.dto.Order;
+import com.foodit.test.solution.dto.Restaurant;
 import com.google.appengine.labs.repackaged.com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
@@ -37,13 +38,25 @@ public class DataLoadController {
 
         // TODO put this logic elsewhere...in a controller in the package com.foodit.test.solution.controller
         // Or, better, in a specific service to implement a separation of concerns
+
         for (String restaurant : restaurants) {
             Order[] orders =  loadDataTest(restaurant);
+            Restaurant restaurantObject = new Restaurant(restaurant);
+
             //TODO can I avoid this cycle and save the whole array?
             for (int i = 0; i < orders.length; i++) {
+
                 Order order = orders[i];
                 ofy().save().entities(order);
+
+                float oldTotalAmountOfSales = restaurantObject.getTotalAmountOfSales();
+                int oldTotalNumberOfOrders = restaurantObject.getTotalNumberOfOrders();
+
+                restaurantObject.setTotalAmountOfSales(oldTotalAmountOfSales + order.getTotalValue());
+                restaurantObject.setTotalNumberOfOrders(++oldTotalNumberOfOrders);
+
             }
+            ofy().save().entities(restaurantObject);
         }
 		return new StringView("Data loaded.");
 	}
