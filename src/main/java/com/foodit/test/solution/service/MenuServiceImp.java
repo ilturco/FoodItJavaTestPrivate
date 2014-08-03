@@ -96,17 +96,17 @@ public class MenuServiceImp implements MenuServiceInterface{
         return result;
     }
 
-    private ArrayList<String> getIndexesMaxValue(Map<String, Long> inputMap) {
+    private List<String> getIndexesMaxValue(Map<String, Long> inputMap) {
         ArrayList<String> maxKeys = new ArrayList<>();
         Long maxValue = new Long(-1);
         // TODO extract the method and put it in some utility class
         for (Map.Entry<String, Long> entry : inputMap.entrySet()) {
-            if (entry.getValue() > maxValue) {
+            if (entry.getValue().longValue() > maxValue.longValue()) {
                 // New max remove all current keys
                 maxKeys.clear();
                 maxKeys.add(entry.getKey());
                 maxValue =  entry.getValue();
-            } else if (entry.getValue() == maxValue) {
+            } else if (entry.getValue().longValue() == maxValue.longValue()) {
                 maxKeys.add(entry.getKey());
             }
         }

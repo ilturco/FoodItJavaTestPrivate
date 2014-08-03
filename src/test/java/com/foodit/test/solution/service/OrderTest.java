@@ -1,5 +1,7 @@
-package com.foodit.test.sample.controller;
+package com.foodit.test.solution.service;
 
+import com.foodit.test.sample.controller.SetupAppengine;
+import com.foodit.test.sample.controller.SetupObjectify;
 import com.foodit.test.solution.bean.dto.LineItem;
 import com.foodit.test.solution.bean.dto.Order;
 import com.threewks.thundr.gae.objectify.repository.AsyncResult;
@@ -11,12 +13,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import static com.atomicleopard.expressive.Expressive.list;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by salvatore on 01/08/2014.
@@ -95,6 +101,32 @@ public class OrderTest {
         list = repository.loadByField("storeId", "foo");
         assertThat(list.size(), is(1));
         assertThat(list, hasItem(testEntity3));
+    }
+
+    @Test
+    public void findIndexMax(){
+        Map<Long, Long> map = new HashMap<>();
+        map.put(new Long(1), new Long(1));
+        map.put(new Long(2), new Long(6));
+        map.put(new Long(3), new Long(6));
+        map.put(new Long(4), new Long(7));
+        map.put(new Long(5), new Long(8));
+        map.put(new Long(6), new Long(7));
+        map.put(new Long(7), new Long(8));
+        map.put(new Long(8), new Long(1));
+        map.put(new Long(9), new Long(3));
+
+        OrderServiceImp orderService = new OrderServiceImp();
+        List<Long> maxKeys = orderService.getIndexesMaxValue(map);
+        assertEquals(2, maxKeys.size());
+        for (int i = 0; i < maxKeys.size(); i++) {
+            Long aLong = maxKeys.get(i);
+            System.out.println("\n\n" + aLong.longValue());
+        }
+        assertTrue(maxKeys.contains(new Long(5)));
+        assertTrue(maxKeys.contains(new Long(7)));
+
+
     }
 
     private Order getOrder(int id) {

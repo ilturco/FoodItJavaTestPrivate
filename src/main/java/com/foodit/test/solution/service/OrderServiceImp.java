@@ -33,7 +33,6 @@ public class OrderServiceImp implements OrderServiceInterface {
     public Set<NumberOfOrdersForARestaurant> getNumberOfOrdersForEachRestaurant() {
 
         List<Restaurant> restaurants = ofy().load().type(Restaurant.class).list();
-        System.out.println("\n\n\n\n\nsize of the restaurant list = " + restaurants.size());
         // Projection queries are not supported by objectify yet (http://stackoverflow.com/questions/23154817/distinct-using-objectify)
         // Therefore we need to manually adapt the dto to a front-end bean that has only the fields needed, which
         // actually is always a best practice.
@@ -44,7 +43,6 @@ public class OrderServiceImp implements OrderServiceInterface {
                     new NumberOfOrdersForARestaurant(restaurant.getStoreId(), restaurant.getTotalNumberOfOrders());
             results.add(restaurantProjected);
         }
-        System.out.println("\n\n\n\n\nsize of the result list = " + results.size());
 
         return results;
     }
@@ -86,6 +84,14 @@ public class OrderServiceImp implements OrderServiceInterface {
         return results;
     }
 
+    /**
+     * This method returns the most frequently ordered meal in the whole FoodIt platform. This implementation does not
+     * uses any materialised view but calculates the aggregation at query time. There is no particular reason for
+     * this choice but since elsewhere I have already used materialised view I wanted to show an implementation of
+     * an aggregation at query time
+     * @return a Set of MealFrontEnd that report the information about a meal. The Set is because there could be more
+     * than one Meal with the same amount of orders
+     */
     @Override
     public Set<MealFrontEnd> getMostFrequentlyOrderedMeals() {
 
@@ -117,7 +123,7 @@ public class OrderServiceImp implements OrderServiceInterface {
         }
 
         // second part: now that we have the structure we just need to find the keys corresponding to the max value
-        ArrayList<Long> maxKeys = getIndexesMaxValue(ordersHM);
+        List<Long> maxKeys = getIndexesMaxValue(ordersHM);
 
         // third part: create an object for each key
         Set<MealFrontEnd> result = new HashSet<>();
@@ -147,18 +153,21 @@ public class OrderServiceImp implements OrderServiceInterface {
 
     }
 
-    private ArrayList<Long> getIndexesMaxValue(Map<Long, Long> inputMap) {
+    public List<Long> getIndexesMaxValue(Map<Long, Long> inputMap) {
         ArrayList<Long> maxKeys = new ArrayList<>();
         Long maxValue = new Long(-1);
-        // TODO extract the method and put it in some utility class
-        // TODO find a smart way to share this code with the code in MenuServiceImp
+        // TODO find a smart way to share this code with the code in MenuServiceImp (different signature)
         for (Map.Entry<Long, Long> entry : inputMap.entrySet()) {
-            if (entry.getValue() > maxValue) {
+            System.out.println("maxValue = " + maxValue);
+            System.out.println("entry.getValue() = " + entry.getValue());
+            if (entry.getValue().longValue() > maxValue.longValue()) {
                 // New max remove all current keys
+                System.out.println("clearing");
                 maxKeys.clear();
                 maxKeys.add(entry.getKey());
                 maxValue =  entry.getValue();
-            } else if (entry.getValue() == maxValue) {
+            } else if (entry.getValue().longValue() == maxValue.longValue()) {
+                System.out.println("equals!");
                 maxKeys.add(entry.getKey());
             }
         }
