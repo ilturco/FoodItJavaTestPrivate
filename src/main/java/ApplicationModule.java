@@ -2,10 +2,7 @@ import com.foodit.test.sample.controller.RestaurantData;
 import com.foodit.test.solution.bean.dto.Meal;
 import com.foodit.test.solution.bean.dto.Order;
 import com.foodit.test.solution.bean.dto.Restaurant;
-import com.foodit.test.solution.service.MenuServiceImp;
-import com.foodit.test.solution.service.MenuServiceInterface;
-import com.foodit.test.solution.service.OrderServiceImp;
-import com.foodit.test.solution.service.OrderServiceInterface;
+import com.foodit.test.solution.service.*;
 import com.googlecode.objectify.ObjectifyService;
 import com.threewks.thundr.gae.GaeModule;
 import com.threewks.thundr.gae.objectify.ObjectifyModule;
@@ -30,6 +27,7 @@ public class ApplicationModule extends BaseModule {
 		configureObjectify();
         injectionContext.inject(OrderServiceImp.class).named("orderService").as(OrderServiceInterface.class);
         injectionContext.inject(MenuServiceImp.class).named("menuService").as(MenuServiceInterface.class);
+        injectionContext.inject(LoadDataServiceImp.class).named("loadDataService").as(LoadDataServiceInterface.class);
 
     }
 
