@@ -7,8 +7,8 @@ public class MealFrontEnd {
     private long id;
     private String name;
     private String category;
-    private float unitPrice;
     private long numberOfOrders;
+    private String restaurant;
 
     public long getId() {
         return id;
@@ -34,14 +34,6 @@ public class MealFrontEnd {
         this.category = category;
     }
 
-    public float getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(float unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
     public long getNumberOfOrders() {
         return numberOfOrders;
     }
@@ -52,5 +44,13 @@ public class MealFrontEnd {
 
     public MealFrontEnd() {
 
+    }
+
+    public String getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(String restaurant) {
+        this.restaurant = restaurant;
     }
 }

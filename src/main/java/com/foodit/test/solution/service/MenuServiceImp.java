@@ -19,6 +19,8 @@ public class MenuServiceImp implements MenuServiceInterface{
     public static final String ROOT_ELEMENT = "menu";
     public static final String ID = "id";
     public static final String CATEGORY = "category";
+    public static final String NAME = "name";
+
 
     @Override
     public List<Meal> parse(String jsonString, String restaurantName)
@@ -46,7 +48,8 @@ public class MenuServiceImp implements MenuServiceInterface{
                 while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
                     JsonNode node = jsonParser.readValueAsTree();
                     mealList.add(new Meal(node.get(ID).getLongValue(), node.get(
-                            CATEGORY).getTextValue(), restaurantName));
+                            CATEGORY).getTextValue(), restaurantName, node.get(
+                            NAME).getTextValue()));
                 }
             }
 
@@ -99,7 +102,7 @@ public class MenuServiceImp implements MenuServiceInterface{
     private List<String> getIndexesMaxValue(Map<String, Long> inputMap) {
         ArrayList<String> maxKeys = new ArrayList<>();
         Long maxValue = new Long(-1);
-        // TODO extract the method and put it in some utility class
+
         for (Map.Entry<String, Long> entry : inputMap.entrySet()) {
             if (entry.getValue().longValue() > maxValue.longValue()) {
                 // New max remove all current keys

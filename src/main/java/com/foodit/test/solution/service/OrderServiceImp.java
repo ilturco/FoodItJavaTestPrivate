@@ -5,6 +5,7 @@ package com.foodit.test.solution.service;
  */
 
 import com.foodit.test.solution.bean.dto.LineItem;
+import com.foodit.test.solution.bean.dto.Meal;
 import com.foodit.test.solution.bean.dto.Order;
 import com.foodit.test.solution.bean.dto.Restaurant;
 import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
@@ -133,8 +134,11 @@ public class OrderServiceImp implements OrderServiceInterface {
             MealFrontEnd mealFrontEnd = new MealFrontEnd();
             mealFrontEnd.setId(itemId);
             mealFrontEnd.setNumberOfOrders(ordersHM.get(itemId));
-            // TODO - read the object
-            mealFrontEnd.setUnitPrice(0);
+
+            Meal meal = ofy().load().type(Meal.class).filter("mealId", itemId).list().get(0);
+            mealFrontEnd.setCategory(meal.getMealCategory());
+            mealFrontEnd.setName(meal.getName());
+            mealFrontEnd.setRestaurant(meal.getRestaurantName());
             result.add(mealFrontEnd);
 
         }
@@ -158,8 +162,6 @@ public class OrderServiceImp implements OrderServiceInterface {
         Long maxValue = new Long(-1);
         // TODO find a smart way to share this code with the code in MenuServiceImp (different signature)
         for (Map.Entry<Long, Long> entry : inputMap.entrySet()) {
-            System.out.println("maxValue = " + maxValue);
-            System.out.println("entry.getValue() = " + entry.getValue());
             if (entry.getValue().longValue() > maxValue.longValue()) {
                 // New max remove all current keys
                 System.out.println("clearing");

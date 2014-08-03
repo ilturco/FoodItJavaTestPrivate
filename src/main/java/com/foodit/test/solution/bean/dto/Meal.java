@@ -15,13 +15,16 @@ public class Meal {
     @Index Long mealId;
     @Index String restaurantName;
     String mealCategory;
+    String name;
    
     private Meal() { }
 
-    public Meal(Long mealId, String mealCategory, String restaurantName) {
+    public Meal(Long mealId, String mealCategory, String restaurantName, String name) {
         this.mealId = mealId;
         this.mealCategory = mealCategory;
         this.restaurantName = restaurantName;
+        this.name = name;
+
     }
     
     public String getMealCategory() {
@@ -48,12 +51,22 @@ public class Meal {
         this.restaurantName = restaurantName;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "RestaurantMenu{" +
                 "id=" + id +
                 ", mealId=" + mealId +
                 ", restaurantName='" + restaurantName + '\'' +
+                ", name='" + name + '\'' +
+
                 ", mealCategory='" + mealCategory + '\'' +
                 '}';
     }

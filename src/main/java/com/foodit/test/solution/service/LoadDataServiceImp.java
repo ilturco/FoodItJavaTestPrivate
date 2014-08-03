@@ -113,14 +113,14 @@ public class LoadDataServiceImp implements LoadDataServiceInterface {
     // ----------------- private methods ----------------------
 
     private Order[] loadDataTest(String restaurantName, String ordersJson) {
-        //TODO probably not the best place where declare and initialize the Gson serializer.
+
         Gson gson = new Gson();
         Order[] orders = gson.fromJson(ordersJson, Order[].class);
+
         return orders;
     }
 
     private List<Meal> loadDataRestaurantMenu(String restaurantName, String menuJson){
-        //TODO the file has already been read. Refactor!
         try {
             return menuService.parse(menuJson, restaurantName);
         } catch (IOException e) {
