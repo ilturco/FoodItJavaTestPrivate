@@ -55,7 +55,7 @@ public class ApplicationRoutes {
 
         // Routes for API #4 - The most frequently ordered category for each restaurant
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategory/{restaurant}", Names.MostFrequentlyOrderedCategory), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));
-        routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategoryForEachRestaurant", Names.MostFrequentlyOrderedCategoryForEachRestaurant), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));
+        routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategoryForEachRestaurant", Names.MostFrequentlyOrderedCategoryForEachRestaurant), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategoryForEachRestaurant"));
 
         // Routes for an internal - debug method that actually returns many of the information contained in the
         // Previous ones

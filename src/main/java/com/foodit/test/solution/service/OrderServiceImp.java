@@ -51,6 +51,11 @@ public class OrderServiceImp implements OrderServiceInterface {
 
     @Deprecated
     @Override
+    /**
+     * There is no specific reason why in this case I go through the orders and make the sum at query time while
+     * in the method getTotalAmountOfMoneyForEachRestaurant I do this aggregation at insert/update time. This is
+     * just a test and I thought that it would be wise to show different possible implementations.
+     */
     public float getTotalAmountOfMoney(String restaurant) {
         List<Order> orders = ofy().load().type(Order.class).filter("storeId", restaurant).list();
         // Datastore does not provide with any aggregation function. This method retrieves all the orders that
@@ -112,21 +117,7 @@ public class OrderServiceImp implements OrderServiceInterface {
         }
 
         // second part: now that we have the structure we just need to find the keys corresponding to the max value
-        ArrayList<Long> maxKeys = new ArrayList<>();
-        Long maxValue = new Long(-1);
-        // TODO extract the method and put it in some utility class
-        for (Map.Entry<Long, Long> entry : ordersHM.entrySet()) {
-            if (entry.getValue() > maxValue) {
-                // New max remove all current keys
-                maxKeys.clear();
-                maxKeys.add(entry.getKey());
-                maxValue = entry.getValue();
-            } else if (entry.getValue() == maxValue) {
-                maxKeys.add(entry.getKey());
-            }
-        }
-
-
+        ArrayList<Long> maxKeys = getIndexesMaxValue(ordersHM);
 
         // third part: create an object for each key
         Set<MealFrontEnd> result = new HashSet<>();
@@ -154,5 +145,23 @@ public class OrderServiceImp implements OrderServiceInterface {
         Set<Restaurant> result = new HashSet<>(restaurants);
         return result;
 
+    }
+
+    private ArrayList<Long> getIndexesMaxValue(Map<Long, Long> inputMap) {
+        ArrayList<Long> maxKeys = new ArrayList<>();
+        Long maxValue = new Long(-1);
+        // TODO extract the method and put it in some utility class
+        // TODO find a smart way to share this code with the code in MenuServiceImp
+        for (Map.Entry<Long, Long> entry : inputMap.entrySet()) {
+            if (entry.getValue() > maxValue) {
+                // New max remove all current keys
+                maxKeys.clear();
+                maxKeys.add(entry.getKey());
+                maxValue =  entry.getValue();
+            } else if (entry.getValue() == maxValue) {
+                maxKeys.add(entry.getKey());
+            }
+        }
+        return maxKeys;
     }
 }

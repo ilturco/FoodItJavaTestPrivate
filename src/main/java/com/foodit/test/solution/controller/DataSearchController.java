@@ -3,7 +3,9 @@ package com.foodit.test.solution.controller;
 import com.foodit.test.solution.bean.dto.Restaurant;
 import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
 import com.foodit.test.solution.bean.frontend.MealFrontEnd;
+import com.foodit.test.solution.bean.frontend.MostFrequentCategory;
 import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
+import com.foodit.test.solution.service.MenuServiceInterface;
 import com.foodit.test.solution.service.OrderServiceInterface;
 import com.threewks.thundr.view.json.JsonView;
 
@@ -15,9 +17,14 @@ import java.util.Set;
 public class DataSearchController {
 
     private OrderServiceInterface orderService;
+    private MenuServiceInterface menuService;
+
 
     public void setOrderService(OrderServiceInterface orderService) {
         this.orderService = orderService;
+    }
+    public void setMenuService(MenuServiceInterface menuService) {
+        this.menuService = menuService;
     }
 
     public JsonView getTotalNumberOfOrders(String restaurant){
@@ -67,7 +74,8 @@ public class DataSearchController {
 
     public JsonView getMostFrequentlyOrderedCategory(String restaurant){
 
-        JsonView result = new JsonView("not yet implemented");
+        MostFrequentCategory mostFrequentCategory =  menuService.getMostFrequentlyOrderedCategory(restaurant);
+        JsonView result = new JsonView(mostFrequentCategory);
 
         return result;
 
@@ -75,7 +83,8 @@ public class DataSearchController {
 
     public JsonView getMostFrequentlyOrderedCategoryForEachRestaurant(){
 
-        JsonView result = new JsonView("not yet implemented");
+        Set<MostFrequentCategory> mostFrequentCategorySet =  menuService.getMostFrequentlyOrderedCategoryForEachRestaurant();
+        JsonView result = new JsonView(mostFrequentCategorySet);
 
         return result;
 

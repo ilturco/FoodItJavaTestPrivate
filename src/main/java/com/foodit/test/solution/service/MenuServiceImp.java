@@ -1,6 +1,7 @@
 package com.foodit.test.solution.service;
 
 import com.foodit.test.solution.bean.dto.Meal;
+import com.foodit.test.solution.bean.dto.Restaurant;
 import com.foodit.test.solution.bean.frontend.MostFrequentCategory;
 import com.threewks.thundr.logger.Logger;
 import org.codehaus.jackson.JsonFactory;
@@ -9,9 +10,9 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class MenuServiceImp implements MenuServiceInterface{
 
@@ -55,11 +56,60 @@ public class MenuServiceImp implements MenuServiceInterface{
 
     @Override
     public MostFrequentCategory getMostFrequentlyOrderedCategory(String restaurant) {
-        return null;
+        List<Restaurant> restaurants = ofy().load().type(Restaurant.class).filter("storeId", restaurant).list();
+        if(restaurants == null) return null;
+        if(restaurants.size() > 1) Logger.warn("WARNING! Multiple (" +restaurants.size() + ") restaurant entry " +
+                " for restaurant: " + restaurant);
+        Restaurant restaurantObject = restaurants.get(0);
+        return getMostFrequentCategoryForRestaurantObject(restaurantObject);
+
     }
 
     @Override
     public Set<MostFrequentCategory> getMostFrequentlyOrderedCategoryForEachRestaurant() {
-        return null;
+        List<Restaurant> restaurants = ofy().load().type(Restaurant.class).list();
+        Set<MostFrequentCategory> result = new HashSet<>();
+        for (int i = 0; i < restaurants.size(); i++) {
+            Restaurant restaurant =  restaurants.get(i);
+            result.add(getMostFrequentCategoryForRestaurantObject(restaurant));
+        }
+        return result;
+    }
+
+
+    // ------------------ private methods ---------------------
+
+    private MostFrequentCategory getMostFrequentCategoryForRestaurantObject(Restaurant restaurantObject) {
+        MostFrequentCategory result = new MostFrequentCategory();
+        result.setRestaurant(restaurantObject.getStoreId());
+        Map<String, Long> categoryMap = restaurantObject.getCategoryMap();
+        List<String> indexes = getIndexesMaxValue(categoryMap);
+        Long numberOrders = categoryMap.get(indexes.get(0));
+        result.setNumberOfOrders(numberOrders.longValue());
+        List<String> categories = new ArrayList<>();
+        for (int i = 0; i < indexes.size(); i++) {
+            String category = indexes.get(i);
+            categories.add(category);
+
+        }
+        result.setCategories(categories);
+        return result;
+    }
+
+    private ArrayList<String> getIndexesMaxValue(Map<String, Long> inputMap) {
+        ArrayList<String> maxKeys = new ArrayList<>();
+        Long maxValue = new Long(-1);
+        // TODO extract the method and put it in some utility class
+        for (Map.Entry<String, Long> entry : inputMap.entrySet()) {
+            if (entry.getValue() > maxValue) {
+                // New max remove all current keys
+                maxKeys.clear();
+                maxKeys.add(entry.getKey());
+                maxValue =  entry.getValue();
+            } else if (entry.getValue() == maxValue) {
+                maxKeys.add(entry.getKey());
+            }
+        }
+        return maxKeys;
     }
 }
