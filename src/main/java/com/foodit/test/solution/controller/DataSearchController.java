@@ -1,5 +1,6 @@
 package com.foodit.test.solution.controller;
 
+import com.foodit.test.solution.bean.dto.Restaurant;
 import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
 import com.foodit.test.solution.bean.frontend.MealFrontEnd;
 import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
@@ -64,9 +65,26 @@ public class DataSearchController {
 
     }
 
-    public JsonView getMostFrequentlyOrderedCategory(){
+    public JsonView getMostFrequentlyOrderedCategory(String restaurant){
 
         JsonView result = new JsonView("not yet implemented");
+
+        return result;
+
+    }
+
+    public JsonView getMostFrequentlyOrderedCategoryForEachRestaurant(){
+
+        JsonView result = new JsonView("not yet implemented");
+
+        return result;
+
+    }
+
+    public JsonView getRestaurantsStats(){
+
+        Set<Restaurant> restaurantSet =  orderService.getRestaurantStats();
+        JsonView result = new JsonView(restaurantSet);
 
         return result;
 

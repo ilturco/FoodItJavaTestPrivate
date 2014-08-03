@@ -145,4 +145,14 @@ public class OrderServiceImp implements OrderServiceInterface {
         return result;
 
     }
+
+    @Override
+    public Set<Restaurant> getRestaurantStats() {
+        List<Restaurant> restaurants = ofy().load().type(Restaurant.class).list();
+        //this is because from time to time the /load action is invoked twice and this causes two
+        //different sets of Restaurant objects to be created.
+        Set<Restaurant> result = new HashSet<>(restaurants);
+        return result;
+
+    }
 }

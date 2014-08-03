@@ -3,75 +3,58 @@ package com.foodit.test.solution.bean.dto;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
-/**
- * Created by salvatore on 31/07/2014.
- */
 @Entity
+// We place the Entity in the global cache (https://code.google.com/p/objectify-appengine/wiki/Caching)
+// This choice comes from two considerations: there are few writings and the data is small
 @Cache
 public class Meal {
-    @Id
-    private Long id;
-    private String name;
-    private String description;
-    private String category;
-    private String restaurant;
-    private Long startingFromPrice;
-    private float numberOfOrders;
+   
+    @Id Long id;	
+    @Index Long mealId;
+    @Index String restaurantName;
+    String mealCategory;
+   
+    private Meal() { }
 
-    public Long getId() {
-        return id;
+    public Meal(Long mealId, String mealCategory, String restaurantName) {
+        this.mealId = mealId;
+        this.mealCategory = mealCategory;
+        this.restaurantName = restaurantName;
+    }
+    
+    public String getMealCategory() {
+        return mealCategory;
+    }
+    
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+    
+    public String getMealId() {
+        return restaurantName;
+    }
+    
+    public void setMealId(Long mealId) {
+        this.mealId = mealId;
+    }
+    
+    public void setMealCategory(String mealCategory) {
+        this.mealCategory = mealCategory;
+    }
+    
+    public void getMealId(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(String restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public Long getStartingFromPrice() {
-        return startingFromPrice;
-    }
-
-    public void setStartingFromPrice(Long startingFromPrice) {
-        this.startingFromPrice = startingFromPrice;
-    }
-
-    public float getNumberOfOrders() {
-        return numberOfOrders;
-    }
-
-    public void setNumberOfOrders(float numberOfOrders) {
-        this.numberOfOrders = numberOfOrders;
+    @Override
+    public String toString() {
+        return "RestaurantMenu{" +
+                "id=" + id +
+                ", mealId=" + mealId +
+                ", restaurantName='" + restaurantName + '\'' +
+                ", mealCategory='" + mealCategory + '\'' +
+                '}';
     }
 }

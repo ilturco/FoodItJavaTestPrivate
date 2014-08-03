@@ -10,6 +10,8 @@
         <gae.version>1.8.9</gae.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <thundr.version>1.0.0</thundr.version>
+        <jackson.version>1.9.13</jackson.version>
+
     </properties>
 
 
@@ -20,6 +22,12 @@
             <artifactId>thundr-gae</artifactId>
             <version>${thundr.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- Jackson Dependency -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Servlet dependencies star this issue to request support for servlet 3.0 on appengine http://code.google.com/p/googleappengine/issues/detail?id=3091 -->

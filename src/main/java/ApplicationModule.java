@@ -1,6 +1,9 @@
 import com.foodit.test.sample.controller.RestaurantData;
+import com.foodit.test.solution.bean.dto.Meal;
 import com.foodit.test.solution.bean.dto.Order;
 import com.foodit.test.solution.bean.dto.Restaurant;
+import com.foodit.test.solution.service.MenuServiceImp;
+import com.foodit.test.solution.service.MenuServiceInterface;
 import com.foodit.test.solution.service.OrderServiceImp;
 import com.foodit.test.solution.service.OrderServiceInterface;
 import com.googlecode.objectify.ObjectifyService;
@@ -26,8 +29,9 @@ public class ApplicationModule extends BaseModule {
 		super.configure(injectionContext);
 		configureObjectify();
         injectionContext.inject(OrderServiceImp.class).named("orderService").as(OrderServiceInterface.class);
+        injectionContext.inject(MenuServiceImp.class).named("menuService").as(MenuServiceInterface.class);
 
-	}
+    }
 
 	@Override
 	public void start(UpdatableInjectionContext injectionContext) {
@@ -40,6 +44,7 @@ public class ApplicationModule extends BaseModule {
 		ObjectifyService.register(RestaurantData.class);
         ObjectifyService.register(Order.class);
         ObjectifyService.register(Restaurant.class);
+        ObjectifyService.register(Meal.class);
 
 
     }

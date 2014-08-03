@@ -27,6 +27,9 @@ public class ApplicationRoutes {
         public static final String TotalAmountOfMoneyEachRestaurant = "total-amount-of-money-for-each-restaurant";
         public static final String MostFrequentlyOrderedMeal = "most-frequently-ordered-meal";
         public static final String MostFrequentlyOrderedCategory = "most-frequently-ordered-category";
+        public static final String MostFrequentlyOrderedCategoryForEachRestaurant = "most-frequently-ordered-category-for-each-restaurant";
+        public static final String RestaurantsStats = "restaurants-stats";
+
 
     }
 
@@ -39,17 +42,24 @@ public class ApplicationRoutes {
 		routes.addRoute(new Route(GET, "/", Names.ViewInstructions), new MethodAction(DataLoadController.class, "instructions"));
 		routes.addRoute(new Route(GET, "/restaurant/{restaurant}/download", Names.ViewData), new MethodAction(DataLoadController.class, "viewData"));
 
-        // Route for API #1 - Total number of orders for each restaurant
+        // Routes for API #1 - Total number of orders for each restaurant
         routes.addRoute(new Route(GET, "/totalNumberOfOrders/{restaurant}", Names.TotalOrders), new MethodAction(DataSearchController.class, "getTotalNumberOfOrders"));
         routes.addRoute(new Route(GET, "/totalNumberOfOrdersForEachRestaurant", Names.TotalOrdersEachRestaurant), new MethodAction(DataSearchController.class, "getTotalNumberOfOrdersForEachRestaurant"));
 
-        // Route for API #2 - Total amount of money (sales) for each restaurant
+        // Routes for API #2 - Total amount of money (sales) for each restaurant
         routes.addRoute(new Route(GET, "/totalAmountOfMoney/{restaurant}", Names.TotalAmountOfMoney), new MethodAction(DataSearchController.class, "getTotalAmountOfMoney"));
         routes.addRoute(new Route(GET, "/totalAmountOfMoneyForEachRestaurant", Names.TotalAmountOfMoneyEachRestaurant), new MethodAction(DataSearchController.class, "getTotalAmountOfMoneyForEachRestaurant"));
 
-
+        // Route for API #3 - Most frequently ordered meal in the whole FoodIt platform
         routes.addRoute(new Route(GET, "/mostFrequentlyOrderedMeal", Names.MostFrequentlyOrderedMeal), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedMeal"));
-        routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategory", Names.MostFrequentlyOrderedCategory), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));
+
+        // Routes for API #4 - The most frequently ordered category for each restaurant
+        routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategory/{restaurant}", Names.MostFrequentlyOrderedCategory), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));
+        routes.addRoute(new Route(GET, "/mostFrequentlyOrderedCategoryForEachRestaurant", Names.MostFrequentlyOrderedCategoryForEachRestaurant), new MethodAction(DataSearchController.class, "getMostFrequentlyOrderedCategory"));
+
+        // Routes for an internal - debug method that actually returns many of the information contained in the
+        // Previous ones
+        routes.addRoute(new Route(GET, "/getRestaurantsStats", Names.RestaurantsStats), new MethodAction(DataSearchController.class, "getRestaurantsStats"));
 
     }
 }

@@ -1,8 +1,12 @@
 package com.foodit.test.solution.bean.dto;
 
+import com.googlecode.objectify.annotation.EmbedMap;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by salvatore on 02/08/2014.
@@ -16,11 +20,14 @@ public class Restaurant {
     private String storeId;
     private int totalNumberOfOrders;
     private float totalAmountOfSales;
+    @EmbedMap
+    private Map<String, Long> categoryMap;
 
     public Restaurant(String storeId) {
         this.storeId = storeId;
         this.totalAmountOfSales = 0;
         this.totalNumberOfOrders = 0;
+        this.categoryMap = new HashMap<>();
 
     }
 
@@ -57,6 +64,14 @@ public class Restaurant {
 
     public void setTotalAmountOfSales(float totalAmountOfSales) {
         this.totalAmountOfSales = totalAmountOfSales;
+    }
+
+    public Map<String, Long> getCategoryMap() {
+        return categoryMap;
+    }
+
+    public void setCategoryMap(Map<String, Long> categoryMap) {
+        this.categoryMap = categoryMap;
     }
 
     @Override

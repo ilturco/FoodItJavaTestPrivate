@@ -1,5 +1,6 @@
 package com.foodit.test.solution.service;
 
+import com.foodit.test.solution.bean.dto.Restaurant;
 import com.foodit.test.solution.bean.frontend.AmountOfMoneyForARestaurant;
 import com.foodit.test.solution.bean.frontend.MealFrontEnd;
 import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
@@ -21,5 +22,5 @@ public interface OrderServiceInterface {
 
     public Set<MealFrontEnd> getMostFrequentlyOrderedMeals();
 
-
+    public Set<Restaurant> getRestaurantStats();
 }

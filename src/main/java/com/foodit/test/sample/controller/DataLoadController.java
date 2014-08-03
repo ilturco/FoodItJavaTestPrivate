@@ -1,7 +1,10 @@
 package com.foodit.test.sample.controller;
 
+import com.foodit.test.solution.bean.dto.LineItem;
+import com.foodit.test.solution.bean.dto.Meal;
 import com.foodit.test.solution.bean.dto.Order;
 import com.foodit.test.solution.bean.dto.Restaurant;
+import com.foodit.test.solution.service.MenuServiceInterface;
 import com.google.appengine.labs.repackaged.com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
@@ -17,7 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -27,7 +33,13 @@ public class DataLoadController {
 		return new JspView("instructions.jsp");
 	}
 
-	public StringView load() {
+    private MenuServiceInterface menuService;
+    public void setMenuService(MenuServiceInterface menuService) {
+        this.menuService = menuService;
+    }
+
+
+    public StringView load() {
 		Logger.info("Loading data");
 		List<String> restaurants = Lists.newArrayList("bbqgrill", "butlersthaicafe", "jashanexquisiteindianfood", "newchinaexpress");
 		List<RestaurantData> restaurantData = Lists.newArrayList();
@@ -36,16 +48,24 @@ public class DataLoadController {
 		}
 		ofy().save().entities(restaurantData);
 
-        // TODO put this logic elsewhere...in a controller in the package com.foodit.test.solution.controller
-        // Or, better, in a specific service to implement a separation of concerns
-        System.out.println("\n\n\nhow many restaurants = " + restaurants.size());
+
 
         for (String restaurant : restaurants) {
-            System.out.println("work for: " + restaurant);
+            List<Meal> mealList = loadDataRestaurantMenu(restaurant);
+            for (int i = 0; i < mealList.size(); i++) {
+                Meal meal = mealList.get(i);
+                ofy().save().entity(meal).now();
+            }
+        }
+
+        // TODO put this logic elsewhere...in a controller in the package com.foodit.test.solution.controller
+        // Or, better, in a specific service to implement a separation of concerns
+
+        //external cycle on restaurants
+        for (String restaurant : restaurants) {
             Order[] orders =  loadDataTest(restaurant);
             Restaurant restaurantObject = new Restaurant(restaurant);
-
-            //TODO can I avoid this cycle and save the whole array?
+            //medium cycle on each order
             for (int i = 0; i < orders.length; i++) {
 
                 Order order = orders[i];
@@ -56,14 +76,44 @@ public class DataLoadController {
 
                 restaurantObject.setTotalAmountOfSales(oldTotalAmountOfSales + order.getTotalValue());
                 restaurantObject.setTotalNumberOfOrders(++oldTotalNumberOfOrders);
+                //internal cycle on lineItems
+                Set<LineItem> lineItemSet = order.getLineItems();
+                for (Iterator<LineItem> iterator = lineItemSet.iterator(); iterator.hasNext(); ) {
+                    LineItem lineItem = iterator.next();
+                    //get category
+                    //System.out.printf("\nline item id = " + lineItem.getId() + " restaurant = " + restaurant + " order = " + order.getId());
+                    List<Meal> mealList = ofy().load().type(Meal.class).filter("mealId", lineItem.getId()).filter("restaurantName", restaurant).list();
+                    Meal meal;
+                    if(mealList.size() == 0){
+                        Logger.warn("THERE IS NO ENTRY IN THE MENU FOR THE ORDER: " + order.getId() +
+                        " RESTAURANT " + restaurant + " ITEM " + lineItem.getId());
+                    } else {
+                        meal = mealList.get(0);
+                        Map<String, Long> map = restaurantObject.getCategoryMap();
+                        int quantity = lineItem.getQuantity();
+                        String mealCategory = meal.getMealCategory();
+                        Long count = map.get(mealCategory);
+                        if(count == null) {
+                            count = new Long(quantity);
+                        } else {
+                            count = count + quantity;
+                        }
+                        map.put(mealCategory, count);
+                        restaurantObject.setCategoryMap(map);
+                    }
+                }
 
             }
-            System.out.println("\n\n\nabout to add the entity = " + restaurantObject);
             ofy().save().entity(restaurantObject);
         }
+
+
+
 		return new StringView("Data loaded.");
 	}
 
+    //the following three methods must be refactored. Called from the same cycle and moved to a service since I wont
+    //to see no logic in the controller.
 	private RestaurantData loadData(String restaurantName) {
 		String orders = readFile(String.format("orders-%s.json", restaurantName));
 		String menu = readFile(String.format("menu-%s.json", restaurantName));
@@ -78,6 +128,17 @@ public class DataLoadController {
         Gson gson = new Gson();
         Order[] orders = gson.fromJson(ordersJson, Order[].class);
         return orders;
+    }
+
+    private List<Meal> loadDataRestaurantMenu(String restaurantName){
+        //TODO the file has already been read. Refactor!
+        String ordersJson = readFile(String.format("menu-%s.json", restaurantName));
+        try {
+            return menuService.parse(ordersJson, restaurantName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
