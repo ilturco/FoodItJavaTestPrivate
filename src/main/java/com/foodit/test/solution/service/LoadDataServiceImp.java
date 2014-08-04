@@ -122,7 +122,7 @@ public class LoadDataServiceImp implements LoadDataServiceInterface {
 
     private List<Meal> loadDataRestaurantMenu(String restaurantName, String menuJson){
         try {
-            return menuService.parse(menuJson, restaurantName);
+            return menuService.parseMenuAndEnrichWithName(menuJson, restaurantName);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

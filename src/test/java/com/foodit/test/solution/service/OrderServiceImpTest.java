@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by salvatore on 01/08/2014.
  */
-public class OrderTest {
+public class OrderServiceImpTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     @Rule public SetupAppengine setupAppengine = new SetupAppengine();

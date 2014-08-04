@@ -16,7 +16,7 @@ public class Meal {
     @Index String restaurantName;
     String mealCategory;
     String name;
-   
+
     private Meal() { }
 
     public Meal(Long mealId, String mealCategory, String restaurantName, String name) {
@@ -26,29 +26,25 @@ public class Meal {
         this.name = name;
 
     }
-    
+
     public String getMealCategory() {
         return mealCategory;
     }
-    
+
     public String getRestaurantName() {
         return restaurantName;
     }
-    
-    public String getMealId() {
-        return restaurantName;
+
+    public Long getMealId() {
+        return mealId;
     }
-    
+
     public void setMealId(Long mealId) {
         this.mealId = mealId;
     }
-    
+
     public void setMealCategory(String mealCategory) {
         this.mealCategory = mealCategory;
-    }
-    
-    public void getMealId(String restaurantName) {
-        this.restaurantName = restaurantName;
     }
 
     public String getName() {

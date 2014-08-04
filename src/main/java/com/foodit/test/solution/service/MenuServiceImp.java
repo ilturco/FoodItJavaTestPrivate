@@ -23,7 +23,10 @@ public class MenuServiceImp implements MenuServiceInterface{
 
 
     @Override
-    public List<Meal> parse(String jsonString, String restaurantName)
+    //This is not a *pure* parser since it takes also the restaurant name
+    //by doing that there is no need to cycle again over the list of meals to add the
+    //restaurant information
+    public List<Meal> parseMenuAndEnrichWithName(String jsonString, String restaurantName)
             throws IOException {
         JsonFactory jsonFactory = new org.codehaus.jackson.map.MappingJsonFactory();
         JsonParser jsonParser = jsonFactory.createJsonParser(jsonString);

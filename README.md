@@ -58,7 +58,7 @@ requires the name of the restaurant in input.
     * https://foodit-test-sp.appspot.com/totalAmountOfMoneyForEachRestaurant this method aggregates the sum of the
     orders for each restaurant. The object returned is an array of objects. The first field of the object is the name
     of the restaurant and the second field is the sum of the value of the orders.
-3. **The most frequently ordered meals on FOODit Platform**  
+3. **The most frequently ordered meals on FOODit Platform** An order has more meals and each meal in an order has a quantity 
     * https://foodit-test-sp.appspot.com/mostFrequentlyOrderedMeal the result is an object with fields:
         * `id` identifier of the meal as specified in the file `menu-{restaurant}.json`
         * `name` name of the meal as specified in the file `menu-{restaurant}.json`
