@@ -7,8 +7,10 @@ import com.foodit.test.solution.bean.frontend.MostFrequentCategory;
 import com.foodit.test.solution.bean.frontend.NumberOfOrdersForARestaurant;
 import com.foodit.test.solution.service.MenuServiceInterface;
 import com.foodit.test.solution.service.OrderServiceInterface;
+import com.threewks.thundr.http.exception.HttpStatusException;
 import com.threewks.thundr.view.json.JsonView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
 /**
@@ -75,8 +77,11 @@ public class DataSearchController {
     public JsonView getMostFrequentlyOrderedCategory(String restaurant){
 
         MostFrequentCategory mostFrequentCategory =  menuService.getMostFrequentlyOrderedCategory(restaurant);
+        if(mostFrequentCategory == null) {
+            throw new HttpStatusException(HttpServletResponse.SC_NOT_FOUND, "Restaurant " +
+                    restaurant + " not found", System.currentTimeMillis());
+        }
         JsonView result = new JsonView(mostFrequentCategory);
-
         return result;
 
     }

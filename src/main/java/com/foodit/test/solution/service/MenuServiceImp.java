@@ -63,6 +63,10 @@ public class MenuServiceImp implements MenuServiceInterface{
         if(restaurants == null) return null;
         if(restaurants.size() > 1) Logger.warn("WARNING! Multiple (" +restaurants.size() + ") restaurant entry " +
                 " for restaurant: " + restaurant);
+        if(restaurants.size() == 0) {
+            Logger.warn("No restaurant object found");
+            return null;
+        }
         Restaurant restaurantObject = restaurants.get(0);
         return getMostFrequentCategoryForRestaurantObject(restaurantObject);
 

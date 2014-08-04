@@ -40,3 +40,22 @@ To expose the api's you can simple return a JsonView from your controller method
 http://3wks.github.io/thundr/1.1/thundr/views.html
 
 Happy coding :)
+
+# Solution
+
+1. **Total number of orders for each restaurant**. My interpretation is that *for each restaurant* means that the method
+shall not get any input but return the information...*for each restaurant*. Anyway I have also implemented a method that
+requires the name of the restaurant in input.
+..* https://foodit-test-sp.appspot.com/totalNumberOfOrders/bbqgrill
+..* https://foodit-test-sp.appspot.com/totalNumberOfOrdersForEachRestaurant
+2. **Total amount (money) of sales per restaurant**. 
+..* https://foodit-test-sp.appspot.com/totalAmountOfMoney/bbqgrill
+..* https://foodit-test-sp.appspot.com/totalAmountOfMoneyForEachRestaurant
+
+https://foodit-test-sp.appspot.com/mostFrequentlyOrderedMeal
+
+https://foodit-test-sp.appspot.com/mostFrequentlyOrderedCategory/{restaurant}
+https://foodit-test-sp.appspot.com/mostFrequentlyOrderedCategoryForEachRestaurant
+
+https://foodit-test-sp.appspot.com/getRestaurantsStats
+
