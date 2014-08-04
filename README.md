@@ -126,11 +126,35 @@ therefore it makes sense to pre-calculate these values. In a real environment it
 In this test I have used both the approaches (query time and insert/updata time); the only reason for this choice is that this is a 
 test and I wanted to show two different options. Anyway in a real production environment I would prefer to use a de-normalised
 materialised view and use a insert/update approach.
-*
-*
-*
+
+* `https://foodit-test-sp.appspot.com/totalNumberOfOrders/{restaurant}` **query time**
+* `https://foodit-test-sp.appspot.com/totalNumberOfOrdersForEachRestaurant` **insert/update time**
+* `https://foodit-test-sp.appspot.com/totalAmountOfMoney/{restaurant}` **query time**
+* `https://foodit-test-sp.appspot.com/totalAmountOfMoneyForEachRestaurant` **insert/update time**
+* `https://foodit-test-sp.appspot.com/mostFrequentlyOrderedMeal` **insert/update time**
+* `https://foodit-test-sp.appspot.com/mostFrequentlyOrderedCategory/{restaurant}` **insert/update time**
+* `https://foodit-test-sp.appspot.com/mostFrequentlyOrderedCategoryForEachRestaurant` **insert/update time**
+* `https://foodit-test-sp.appspot.com/getRestaurantsStats` **insert/update time**
+
 
 ## class structure
+There are two sets of beans:
+
+* *DTO* beans that maps the entity in the Datastore
+* *Frontend* beans that are used to create the response JSON
+
+There are two controllers
+
+* `DataLoadController` maps one single action: the loading of all the data
+* `DataSearchController` maps all the other search related actions. 
+
+There is no logic in any of the controllers.
+
+There are three services:
+
+* `LoadDataServiceInterface` define the action to load the data into the datastore
+* `MenuServiceInterface` define the actions to deal with the Meals
+* `OrderServiceInterface` define the actions to deal with the Orders 
 
 
 # todo
@@ -144,3 +168,5 @@ happened. Then the consumer of the API can decide whether to use or not the addi
 From time to time the "load" action is invoked twice. This was happening on my local environment even with the original
 sample application. As a consequence of that some objects can be duplicated. To fix that issue all the methods return a
 `java.util.Set of objects` that override the `equals(Object o)` method. So no duplicated objects are returned in the output.
+## better test coverage
+Both unit and integration tests.
